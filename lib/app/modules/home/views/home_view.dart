@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:game_islami/app/routes/app_pages.dart';
 import 'package:game_islami/app/style/app_color.dart';
 import 'package:game_islami/app/widgets/challenge_tile.dart';
 import 'package:game_islami/app/widgets/info_card.dart';
 import 'package:game_islami/app/widgets/main_bottom_navigation_bar.dart';
+import 'package:game_islami/app/widgets/main_button.dart';
 import 'package:get/get.dart';
 
 import '../controllers/home_controller.dart';
@@ -83,73 +85,25 @@ class HomeView extends GetView<HomeController> {
                       fontSize: 12,
                     ),
                   ),
-                  Container(
+                  MainButton(
                     margin: EdgeInsets.only(top: 16),
-                    width: MediaQuery.of(context).size.width,
-                    height: 60,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(),
-                          Text(
-                            'Tebak Surah',
-                            style: TextStyle(
-                              fontFamily: 'poppins',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            color: Colors.white.withOpacity(0.5),
-                          ),
-                        ],
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: AppColor.secondary,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ),
+                    title: "Tebak Surah",
+                    backgroundColor: AppColor.secondary,
+                    titleColor: Colors.white,
+                    iconColor: Colors.white.withOpacity(0.5),
+                    onTap: () {
+                      Get.toNamed(Routes.TEBAK_SURAH);
+                    },
                   ),
-                  Container(
+                  MainButton(
                     margin: EdgeInsets.only(top: 16),
-                    width: MediaQuery.of(context).size.width,
-                    height: 60,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(),
-                          Text(
-                            'Sambung Ayat',
-                            style: TextStyle(
-                              fontFamily: 'poppins',
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Icon(
-                            Icons.arrow_forward_ios_rounded,
-                            color: Colors.white.withOpacity(0.5),
-                          ),
-                        ],
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: AppColor.secondary,
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ),
+                    title: "Sambung Ayat",
+                    backgroundColor: AppColor.secondary,
+                    titleColor: Colors.white,
+                    iconColor: Colors.white.withOpacity(0.5),
+                    onTap: () {
+                      Get.toNamed(Routes.SAMBUNG_AYAT);
+                    },
                   ),
                 ],
               ),
