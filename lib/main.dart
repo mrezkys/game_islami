@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:game_islami/app/controllers/loading_controller.dart';
 import 'package:game_islami/app/controllers/main_bottom_navigation_bar_controller.dart';
 import 'package:game_islami/app/style/app_color.dart';
 
@@ -10,6 +11,7 @@ import 'app/routes/app_pages.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Get.put(MainBottomNavigationBarController());
+  Get.put(LoadingController());
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: AppColor.secondary,
     statusBarBrightness: Brightness.dark,
@@ -23,6 +25,10 @@ void main() {
       theme: ThemeData(
         fontFamily: 'inter',
         scaffoldBackgroundColor: Colors.white,
+        textTheme: TextTheme().apply(
+          bodyColor: AppColor.secondary,
+          displayColor: AppColor.secondary,
+        ),
       ),
     ),
   );
