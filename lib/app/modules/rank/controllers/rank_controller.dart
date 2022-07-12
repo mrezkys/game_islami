@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
 
 class RankController extends GetxController {
-  //TODO: Implement RankController
-
   final count = 0.obs;
   @override
   void onInit() {
