@@ -6,6 +6,7 @@ class AppColor {
   static const Color secondaryLight = Color(0xFF2C374C);
   static const Color grey = Color(0xFFE1E1E1);
 
+  static const Color success = Color(0xFF16AE26);
   static const Color warning = Color(0xFFEAA53D);
   static const Color danger = Color(0xFFFF6060);
 }
