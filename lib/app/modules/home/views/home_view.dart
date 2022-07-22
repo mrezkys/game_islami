@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:game_islami/app/routes/app_pages.dart';
@@ -6,6 +7,7 @@ import 'package:game_islami/app/widgets/challenge_tile.dart';
 import 'package:game_islami/app/widgets/info_card.dart';
 import 'package:game_islami/app/widgets/main_bottom_navigation_bar.dart';
 import 'package:game_islami/app/widgets/main_button.dart';
+import 'package:game_islami/app/widgets/user_info.dart';
 import 'package:get/get.dart';
 
 import '../controllers/home_controller.dart';
@@ -21,56 +23,7 @@ class HomeView extends GetView<HomeController> {
           physics: BouncingScrollPhysics(),
           children: [
             // Section 1 - Header
-            Container(
-              width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 20),
-              color: AppColor.secondary,
-              child: Column(
-                children: [
-                  Text(
-                    "👋 Hi Rezky,",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w800,
-                      fontFamily: 'poppins',
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                    "selamat datang!",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'poppins',
-                      color: Colors.white,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 16),
-                    width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: AppColor.secondaryLight,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Row(
-                      children: [
-                        InfoCard(
-                          value: 2000,
-                          title: 'Pahala',
-                          icon: SvgPicture.asset('assets/icons/star.svg'),
-                        ),
-                        InfoCard(
-                          value: 23,
-                          title: 'Urutan Alim',
-                          icon: SvgPicture.asset('assets/icons/profile-bulk.svg'),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            UserInfo(),
             // Section 2 - Game
             Container(
               width: MediaQuery.of(context).size.width,
