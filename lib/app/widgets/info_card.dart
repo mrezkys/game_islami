@@ -5,11 +5,13 @@ class InfoCard extends StatelessWidget {
   final String title;
   final int value;
   final Widget icon;
+  final bool isLoading;
 
   InfoCard({
     required this.title,
     required this.value,
     required this.icon,
+    this.isLoading = false,
   });
 
   @override
@@ -33,15 +35,25 @@ class InfoCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  '$value',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: 'poppins',
-                  ),
-                ),
+                (isLoading == true)
+                    ? Text(
+                        'Loading...',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          fontFamily: 'poppins',
+                        ),
+                      )
+                    : Text(
+                        '$value',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          fontFamily: 'poppins',
+                        ),
+                      ),
                 Text(
                   '$title',
                   style: TextStyle(color: Colors.white, fontSize: 10),
