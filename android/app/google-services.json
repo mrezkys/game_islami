@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "185921391550",
+    "project_id": "game-islami",
+    "storage_bucket": "game-islami.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:185921391550:android:e06ee04fe65e6266d947ef",
+        "android_client_info": {
+          "package_name": "com.mrezkys.game_islami"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "185921391550-468e66d2gckdn9sl0mlb3n386v5b96l0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1iz4v1yFqLHf_T11Lkpw4fEw0_4J4yCQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "185921391550-468e66d2gckdn9sl0mlb3n386v5b96l0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "185921391550-l46brl6ons2r3qapjonci06r9ahc50k0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mrezkys.gameIslami"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
