@@ -33,33 +33,77 @@ class SambungAyatGameController extends GetxController {
     return surah;
   }
 
+  // fix bug if ayah <= 5 gonna be error
+  addMoreChoice(int exclude) {
+    while (selectedSurah.value.listAyahs!.length <= 6) {
+      Random random = Random();
+      int r;
+      r = random.nextInt(selectedSurah.value.listAyahs!.length);
+      if (r == exclude) {
+        continue;
+      } else {
+        selectedSurah.value.listAyahs!.add(
+          selectedSurah.value.listAyahs![r],
+        );
+        selectedSurah.refresh();
+      }
+    }
+  }
+
   SambungAyatQuestion generateQuestion() {
-    int? end = selectedSurah.value.numberOfAyahs;
-    print(end);
+    bool isLessThan5 = false;
+    int? end = selectedSurah.value.listAyahs!.length;
     Random random = Random();
 
-    int questionAyahs = random.nextInt((end! - 1));
+    int questionAyahs = random.nextInt(end);
+    if (questionAyahs == end) {
+      questionAyahs -= 1;
+    }
 
     List<int?> choice = [null, null, null, null];
     int answerIndex = random.nextInt(3);
     choice[answerIndex] = questionAyahs + 1;
 
+    if (end <= 5) {
+      isLessThan5 = true;
+      addMoreChoice((questionAyahs + 1));
+    }
+
     int choiceIndexStart = 0;
     int trying = 0;
 
-    while (trying < 3) {
-      int pickAyahChoice = random.nextInt(end - 1);
+    if (isLessThan5 == true) {
+      while (trying < 3) {
+        int pickAyahChoice = random.nextInt(end);
 
-      if (pickAyahChoice == questionAyahs || choice.contains(pickAyahChoice) == true) {
-        continue;
-      } else {
-        if (choiceIndexStart == answerIndex) {
-          choiceIndexStart++;
+        if (pickAyahChoice == questionAyahs) {
           continue;
         } else {
-          choice[choiceIndexStart] = pickAyahChoice;
-          choiceIndexStart++;
-          trying++;
+          if (choiceIndexStart == answerIndex) {
+            choiceIndexStart++;
+            continue;
+          } else {
+            choice[choiceIndexStart] = pickAyahChoice;
+            choiceIndexStart++;
+            trying++;
+          }
+        }
+      }
+    } else {
+      while (trying < 3) {
+        int pickAyahChoice = random.nextInt(end);
+
+        if (pickAyahChoice == questionAyahs || choice.contains(pickAyahChoice) == true) {
+          continue;
+        } else {
+          if (choiceIndexStart == answerIndex) {
+            choiceIndexStart++;
+            continue;
+          } else {
+            choice[choiceIndexStart] = pickAyahChoice;
+            choiceIndexStart++;
+            trying++;
+          }
         }
       }
     }
