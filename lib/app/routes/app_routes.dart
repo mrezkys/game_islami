@@ -12,6 +12,9 @@ abstract class Routes {
   static const SAMBUNG_AYAT_GAME = _Paths.SAMBUNG_AYAT_GAME;
   static const PILIH_SURAH = _Paths.PILIH_SURAH;
   static const TEBAK_SURAH_GAME = _Paths.TEBAK_SURAH_GAME;
+  static const LOGIN = _Paths.LOGIN;
+  static const REGISTER = _Paths.REGISTER;
+  static const UPDATE_PROFILE = _Paths.UPDATE_PROFILE;
 }
 
 abstract class _Paths {
@@ -23,4 +26,7 @@ abstract class _Paths {
   static const SAMBUNG_AYAT_GAME = '/sambung-ayat-game';
   static const PILIH_SURAH = '/pilih-surah';
   static const TEBAK_SURAH_GAME = '/tebak-surah-game';
+  static const LOGIN = '/login';
+  static const REGISTER = '/register';
+  static const UPDATE_PROFILE = '/update-profile';
 }
