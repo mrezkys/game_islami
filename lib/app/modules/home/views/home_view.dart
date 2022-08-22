@@ -1,10 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:game_islami/app/routes/app_pages.dart';
 import 'package:game_islami/app/style/app_color.dart';
 import 'package:game_islami/app/widgets/challenge_tile.dart';
-import 'package:game_islami/app/widgets/info_card.dart';
 import 'package:game_islami/app/widgets/main_bottom_navigation_bar.dart';
 import 'package:game_islami/app/widgets/main_button.dart';
 import 'package:game_islami/app/widgets/user_info.dart';
@@ -75,25 +73,35 @@ class HomeView extends GetView<HomeController> {
                       fontSize: 12,
                     ),
                   ),
-                  ListView.separated(
-                    itemCount: 3,
-                    shrinkWrap: true,
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    physics: NeverScrollableScrollPhysics(),
-                    separatorBuilder: (context, index) => SizedBox(height: 16),
-                    itemBuilder: (context, index) {
-                      return ChallengeTile(
-                        progressTitle: Text(
-                          "7/10",
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: 'poppins',
-                          ),
-                        ),
-                        progressValue: 0.8,
-                        title: "Tebak 10 Surah",
-                        subtitle: "hadiah 1000 pahala",
+                  StreamBuilder<QuerySnapshot>(
+                    stream: controller.getChallanges(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) return Text('errr');
+                      if (snapshot.connectionState == ConnectionState.waiting) return Text('loading');
+                      return ListView(
+                        shrinkWrap: true,
+                        padding: EdgeInsets.symmetric(vertical: 16),
+                        physics: NeverScrollableScrollPhysics(),
+                        children: snapshot.data!.docs.map((QueryDocumentSnapshot document) {
+                          Map<String, dynamic> challengeData = document.data()! as Map<String, dynamic>;
+                          print(challengeData);
+                          double progressValue = challengeData['amount'] / challengeData['limit'];
+                          if (progressValue >= 1.0) progressValue = 1.0;
+                          return ChallengeTile(
+                            progressTitle: Text(
+                              "${challengeData['amount']}/${challengeData['limit']}",
+                              style: TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'poppins',
+                              ),
+                            ),
+                            progressValue: progressValue,
+                            title: "${challengeData['name']}",
+                            subtitle: "hadiah ${challengeData['reward']} pahala",
+                            margin: EdgeInsets.only(bottom: 16),
+                          );
+                        }).toList(),
                       );
                     },
                   ),
