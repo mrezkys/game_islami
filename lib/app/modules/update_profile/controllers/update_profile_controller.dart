@@ -18,6 +18,7 @@ class UpdateProfileController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   checkIsAnonymous() {
+    print('aaaa: ${auth.currentUser!.isAnonymous}');
     return auth.currentUser!.isAnonymous;
   }
 
@@ -36,7 +37,6 @@ class UpdateProfileController extends GetxController {
         DocumentReference userDocument = usersCollection.doc(uid);
         await userDocument.update({
           'name': 'Pengguna Baru',
-          'point': 10,
           'email': emailC.text,
         });
         Get.back();
@@ -65,7 +65,6 @@ class UpdateProfileController extends GetxController {
   Future<void> updatePassword() async {
     if (currentPassC.text.isNotEmpty && passC.text.isNotEmpty && confirmPassC.text.isNotEmpty) {
       if (passC.text == confirmPassC.text) {
-        //TODO: isLoading.value = true;
         try {
           String emailUser = auth.currentUser!.email!;
           // checking if the current password is true
@@ -111,7 +110,8 @@ class UpdateProfileController extends GetxController {
         updatePassword();
         Get.back();
       } else if (passC.text.isEmpty || confirmPassC.text.isEmpty || currentPassC.text.isEmpty) {
-        CustomSnackbar.errorSnackbar('Gagal perbarui password', 'untuk update password harus isi semua password, jika tidak silahkan hapus yang terisi');
+        CustomSnackbar.errorSnackbar(
+            'Gagal perbarui password', 'untuk update password harus isi semua password, jika tidak silahkan hapus yang terisi');
       }
     } catch (e) {
       CustomSnackbar.errorSnackbar('Gagal perbarui password', 'error : ${e.toString()}');
@@ -126,7 +126,7 @@ class UpdateProfileController extends GetxController {
   @override
   void onReady() {
     nameC.text = userDataFromArgument['name'];
-    emailC.text = userDataFromArgument['email'];
+    emailC.text = userDataFromArgument['email'] ?? '';
     super.onReady();
   }
 
