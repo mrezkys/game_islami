@@ -37,20 +37,10 @@ class ProfileView extends GetView<ProfileController> {
                       margin: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
                       child: Column(
                         children: [
-                          // MenuButton(
-                          //   title: "Tukar Pahala",
-                          //   onTap: () {},
-                          //   backgroundColor: AppColor.secondary,
-                          //   titleColor: Colors.white,
-                          //   borderColor: AppColor.secondary,
-                          //   suffixIcon: Icon(
-                          //     Icons.arrow_forward_ios_rounded,
-                          //     color: AppColor.grey,
-                          //   ),
-                          // ),
                           MenuButton(
                             title: "Tukar Pahala",
                             onTap: () {},
+                            backgroundColor: AppColor.grey,
                             suffixIcon: Icon(
                               Icons.arrow_forward_ios_rounded,
                               color: AppColor.grey,
