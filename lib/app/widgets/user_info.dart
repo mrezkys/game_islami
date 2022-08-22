@@ -57,10 +57,12 @@ class UserInfo extends GetView<UserInfoController> {
                           title: 'Pahala',
                           icon: SvgPicture.asset('assets/icons/star.svg'),
                         ),
-                        InfoCard(
-                          value: 23,
-                          title: 'Urutan Alim',
-                          icon: SvgPicture.asset('assets/icons/profile-bulk.svg'),
+                        Obx(
+                          () => InfoCard(
+                            value: controller.userRank.value ?? 0,
+                            title: 'Urutan Alim',
+                            icon: SvgPicture.asset('assets/icons/profile-bulk.svg'),
+                          ),
                         ),
                       ],
                     ),
