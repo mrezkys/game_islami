@@ -1,20 +1,27 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:game_islami/app/controllers/game_controller.dart';
 import 'package:game_islami/app/controllers/loading_controller.dart';
 import 'package:game_islami/app/data/models/ayahs_model.dart';
+import 'package:game_islami/app/data/models/point_allocation.dart';
 import 'package:game_islami/app/data/models/sambung_ayat_question.dart';
 import 'package:game_islami/app/data/models/surah_model.dart';
 import 'package:game_islami/app/data/providers/surah_provider.dart';
 import 'package:game_islami/app/style/app_color.dart';
 import 'package:game_islami/app/widgets/alert/game_alert.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class SambungAyatGameController extends GetxController {
   Surah? argument = Get.arguments;
+  RxnString gameType = RxnString();
 
   LoadingController loadingController = Get.find<LoadingController>();
+  GameController gameController = Get.find<GameController>();
   SurahProvider surahProvider = SurahProvider();
+  GetStorage box = GetStorage();
+
   int surahCount = 114;
 
   RxBool isAnswered = RxBool(false);
@@ -130,19 +137,28 @@ class SambungAyatGameController extends GetxController {
     loadingController.isLoading.value = true;
     if (argument == null) {
       selectedSurah.value = await getRandomSurah();
+      gameType.value = 'random';
     } else {
       selectedSurah.value = await surahProvider.getSurah(argument!.number!);
+      gameType.value = 'pick';
     }
     currentQuestion.value = await generateQuestion();
     loadingController.isLoading.value = false;
   }
 
-  checkAnswer() {
+  checkAnswer() async {
     isAnswered.value = true;
     isAnswered.refresh();
 
     if (selectedChoice == currentQuestion.value!.answerIndexInChoice) {
-      GameAlert.showTrueAlert(point: 10);
+      PointAllocation pointAllocation = await box.read('point_allocation');
+      if (gameType.value == 'random') {
+        await gameController.addPointToUserAccount(amount: pointAllocation.sambungAyatRandom);
+        GameAlert.showTrueAlert(point: pointAllocation.sambungAyatRandom);
+      } else {
+        await gameController.addPointToUserAccount(amount: pointAllocation.sambungAyat);
+        GameAlert.showTrueAlert(point: pointAllocation.sambungAyat);
+      }
       print("benar");
     } else {
       GameAlert.showWrongAlert();

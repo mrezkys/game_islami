@@ -1,16 +1,22 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:game_islami/app/controllers/game_controller.dart';
 import 'package:game_islami/app/controllers/loading_controller.dart';
+import 'package:game_islami/app/data/models/point_allocation.dart';
 import 'package:game_islami/app/data/models/surah_model.dart';
 import 'package:game_islami/app/data/models/tebak_surah_question.dart';
 import 'package:game_islami/app/data/providers/surah_provider.dart';
 import 'package:game_islami/app/style/app_color.dart';
 import 'package:game_islami/app/widgets/alert/game_alert.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class TebakSurahGameController extends GetxController {
   LoadingController loadingController = Get.find<LoadingController>();
+  GameController gameController = Get.find<GameController>();
+
   SurahProvider surahProvider = SurahProvider();
+  GetStorage box = GetStorage();
 
   int surahCount = 114;
   Rxn<List<Surah>> listSurah = Rxn();
@@ -82,12 +88,14 @@ class TebakSurahGameController extends GetxController {
     loadingController.isLoading.value = false;
   }
 
-  checkAnswer() {
+  checkAnswer() async {
     isAnswered.value = true;
     isAnswered.refresh();
-
     if (selectedChoice.value == currentQuestion.value!.answerIndexInChoice) {
-      GameAlert.showTrueAlert(point: 10);
+      PointAllocation pointAllocation = await box.read('point_allocation');
+      await gameController.addPointToUserAccount(amount: pointAllocation.tebakSurah);
+      await gameController.updateChallengeData(type: 'tebak_surah');
+      GameAlert.showTrueAlert(point: pointAllocation.tebakSurah);
       print("benar");
     } else {
       GameAlert.showWrongAlert();
