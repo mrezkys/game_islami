@@ -7,17 +7,20 @@ class ChallengeTile extends StatelessWidget {
   final Widget progressTitle;
   final String title;
   final String subtitle;
+  final EdgeInsetsGeometry margin;
 
   ChallengeTile({
     required this.progressValue,
     required this.progressTitle,
     required this.title,
     required this.subtitle,
+    this.margin = EdgeInsets.zero,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: margin,
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
