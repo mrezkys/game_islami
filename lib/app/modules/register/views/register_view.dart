@@ -102,7 +102,9 @@ class RegisterView extends GetView<RegisterController> {
                 margin: EdgeInsets.only(top: 4),
                 width: MediaQuery.of(context).size.width,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.register();
+                  },
                   child: Text(
                     'Daftar',
                     style: TextStyle(
@@ -152,7 +154,9 @@ class RegisterView extends GetView<RegisterController> {
               Container(
                 width: MediaQuery.of(context).size.width,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.loginC.loginAnonymously();
+                  },
                   child: Text(
                     'Masuk tanpa akun',
                     style: TextStyle(
