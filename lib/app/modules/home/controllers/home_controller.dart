@@ -11,6 +11,12 @@ class HomeController extends GetxController {
     yield* firestore.collection("users").doc(uid).snapshots();
   }
 
+  Stream<QuerySnapshot> getChallanges() {
+    String uid = auth.currentUser!.uid;
+    var challangesCollection = firestore.collection('users').doc(uid).collection('challenges');
+    return challangesCollection.snapshots();
+  }
+
   @override
   void onInit() {
     super.onInit();
