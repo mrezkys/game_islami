@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:game_islami/app/controllers/game_controller.dart';
 import 'package:game_islami/app/controllers/loading_controller.dart';
 import 'package:game_islami/app/controllers/main_bottom_navigation_bar_controller.dart';
 import 'package:game_islami/app/controllers/user_info_controller.dart';
@@ -8,6 +9,7 @@ import 'package:game_islami/app/style/app_color.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:game_islami/app/widgets/loading_screen.dart';
+import 'package:get_storage/get_storage.dart';
 import 'firebase_options.dart';
 
 import 'package:get/get.dart';
@@ -19,9 +21,15 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await GetStorage.init();
+
   Get.put(MainBottomNavigationBarController());
   Get.put(LoadingController());
   Get.put(UserInfoController());
+
+  var gameC = Get.put(GameController());
+  gameC.initGame();
+
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: AppColor.secondary,
     statusBarBrightness: Brightness.dark,
