@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:game_islami/app/controllers/game_controller.dart';
 import 'package:game_islami/app/routes/app_pages.dart';
 import 'package:game_islami/app/widgets/snackbar/custom_snackbar.dart';
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
+  var gameC = Get.find<GameController>();
+
   RxBool obsecureText = RxBool(true);
   TextEditingController emailC = TextEditingController();
   TextEditingController passC = TextEditingController();
@@ -21,12 +24,17 @@ class LoginController extends GetxController {
         CollectionReference usersCollection = firestore.collection('users');
         DocumentReference userDocument = usersCollection.doc(uid);
         await userDocument.set({
+          'uid': uid,
           'name': 'Pengguna Baru',
           'point': 10,
           'email': credential.user!.email,
         });
       }
       print('berhasil');
+
+      // re init game data
+      await gameC.initGame();
+
       Get.toNamed(Routes.HOME);
     } catch (e) {
       print(e);
@@ -40,6 +48,10 @@ class LoginController extends GetxController {
           email: emailC.text,
           password: passC.text,
         );
+
+        // re init game data
+        await gameC.initGame();
+
         Get.offAndToNamed(Routes.HOME);
       } on FirebaseAuthException catch (e) {
         // isLoading.value = false;
