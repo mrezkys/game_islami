@@ -2,7 +2,7 @@ import 'package:game_islami/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 class MainBottomNavigationBarController extends GetxController {
-  RxInt pageIndex = 0.obs;
+  RxInt pageIndex = RxInt(0);
 
   void changePage(int index) {
     pageIndex.value = index;

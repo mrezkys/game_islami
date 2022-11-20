@@ -24,7 +24,8 @@ class MainBottomNavigationBar extends GetView<MainBottomNavigationBarController>
           label: '',
         ),
         BottomNavigationBarItem(
-          icon: SvgPicture.asset((controller.pageIndex.value == 2) ? 'assets/icons/profile.svg' : 'assets/icons/profile-outline.svg'),
+          icon: SvgPicture.asset(
+              (controller.pageIndex.value == 2) ? 'assets/icons/profile.svg' : 'assets/icons/profile-outline.svg'),
           label: '',
         ),
       ],

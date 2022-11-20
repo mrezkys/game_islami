@@ -96,7 +96,13 @@ class TebakSurahGameView extends GetView<TebakSurahGameController> {
                                     value: index,
                                     groupValue: controller.selectedChoice.value,
                                     fillColor: MaterialStateColor.resolveWith((states) => AppColor.secondary),
-                                    onChanged: (value) {},
+                                    onChanged: (value) {
+                                      if (controller.isAnswered.value == false) {
+                                        controller.selectedChoice.value = index;
+                                        controller.selectedChoice.refresh();
+                                        controller.checkAnswer();
+                                      }
+                                    },
                                   ),
                                   Expanded(
                                     child: Text(

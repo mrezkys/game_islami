@@ -34,9 +34,9 @@ class TebakSurahGameController extends GetxController {
   TebakSurahQuestion generateQuestion() {
     Random random = Random();
     int answerSurahNumber = random.nextInt(surahCount - 1);
-    int answerIndexInChoice = random.nextInt(3);
+    int answerInChoice = random.nextInt(3);
     List<int?> choiceSurahNumber = [null, null, null, null];
-    choiceSurahNumber[answerIndexInChoice] = answerSurahNumber;
+    choiceSurahNumber[answerInChoice] = answerSurahNumber;
 
     int trying = 0;
     int choiceIndexStart = 0;
@@ -45,7 +45,7 @@ class TebakSurahGameController extends GetxController {
       if (pickSurahNumber == answerSurahNumber || choiceSurahNumber.contains(pickSurahNumber) == true) {
         continue;
       } else {
-        if (choiceIndexStart == answerIndexInChoice) {
+        if (choiceIndexStart == answerInChoice) {
           choiceIndexStart++;
           continue;
         } else {
@@ -57,30 +57,26 @@ class TebakSurahGameController extends GetxController {
     }
 
     TebakSurahQuestion tebakSurahQuestion = TebakSurahQuestion(
-      // question: listSurah.value![answerSurahNumber].listAyahs![0]!.text,
-      // choiceString: listSurahName,
-      answerIndexInChoice: answerIndexInChoice,
+      answerInChoice: answerInChoice,
       choiceIndex: choiceSurahNumber.cast<int>(),
     );
 
     return tebakSurahQuestion;
-    // print(tebakSurahQuestion.toString());
-    // print('answerSurahNumber : $answerSurahNumber, choiceSurahNumber: $choiceSurahNumber');
   }
 
   initApp() async {
     loadingController.isLoading.value = true;
 
     currentQuestion.value = await generateQuestion();
-    List<int> answerIndexInChoice = currentQuestion.value!.choiceIndex!;
+    List<int> answerInChoice = currentQuestion.value!.choiceIndex!;
 
-    listSurah.value = await getAllSurah(answerIndexInChoice);
+    listSurah.value = await getAllSurah(answerInChoice);
     listSurah.refresh();
     List<String?> listSurahName = [];
     listSurah.value!.forEach((surah) => listSurahName.add(surah.englishName));
     currentQuestion.value!.choiceString = listSurahName;
     //pertanyaanny ayat ke 2 aja [1]
-    currentQuestion.value!.question = listSurah.value![currentQuestion.value!.answerIndexInChoice!].listAyahs![1]!.text;
+    currentQuestion.value!.question = listSurah.value![currentQuestion.value!.answerInChoice!].listAyahs![1]!.text;
     currentQuestion.refresh();
     listSurah.refresh();
     print(currentQuestion.value);
@@ -91,7 +87,7 @@ class TebakSurahGameController extends GetxController {
   checkAnswer() async {
     isAnswered.value = true;
     isAnswered.refresh();
-    if (selectedChoice.value == currentQuestion.value!.answerIndexInChoice) {
+    if (selectedChoice.value == currentQuestion.value!.answerInChoice) {
       PointAllocation pointAllocation = await box.read('point_allocation');
       await gameController.addPointToUserAccount(amount: pointAllocation.tebakSurah);
       await gameController.updateChallengeData(type: 'tebak_surah');
@@ -105,7 +101,7 @@ class TebakSurahGameController extends GetxController {
 
   changeColor(int index) {
     if (selectedChoice.value != null) {
-      if (index == currentQuestion.value!.answerIndexInChoice) {
+      if (index == currentQuestion.value!.answerInChoice) {
         return AppColor.primary;
       } else {
         return Colors.white;

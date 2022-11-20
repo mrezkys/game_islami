@@ -118,13 +118,12 @@ class SambungAyatGameController extends GetxController {
     List<Ayahs?> listAyahs = selectedSurah.value.listAyahs!;
     List<String?> listAyahsString = [];
     listAyahs.forEach((ayahs) => listAyahsString.add(ayahs!.text));
-    // print('choice : $choice | question: $questionAyahs | answer : ${choice[answerIndex]}');
 
     SambungAyatQuestion question = SambungAyatQuestion(
       question: listAyahs[questionAyahs]!.text,
       questionIndexinSurah: questionAyahs,
       listChoiceIndexinSurah: choice,
-      answerIndexInChoice: choice[answerIndex],
+      answerInChoice: choice[answerIndex],
       choiceString: listAyahsString,
     );
 
@@ -150,7 +149,7 @@ class SambungAyatGameController extends GetxController {
     isAnswered.value = true;
     isAnswered.refresh();
 
-    if (selectedChoice == currentQuestion.value!.answerIndexInChoice) {
+    if (selectedChoice == currentQuestion.value!.answerInChoice) {
       PointAllocation pointAllocation = await box.read('point_allocation');
       if (gameType.value == 'random') {
         await gameController.addPointToUserAccount(amount: pointAllocation.sambungAyatRandom);
@@ -168,7 +167,7 @@ class SambungAyatGameController extends GetxController {
 
   changeColor(int index) {
     if (selectedChoice.value != null) {
-      if (currentQuestion.value!.listChoiceIndexinSurah![index] == currentQuestion.value!.answerIndexInChoice) {
+      if (currentQuestion.value!.listChoiceIndexinSurah![index] == currentQuestion.value!.answerInChoice) {
         return AppColor.primary;
       } else {
         return Colors.white;
