@@ -153,9 +153,11 @@ class SambungAyatGameController extends GetxController {
       PointAllocation pointAllocation = await box.read('point_allocation');
       if (gameType.value == 'random') {
         await gameController.addPointToUserAccount(amount: pointAllocation.sambungAyatRandom);
+        await gameController.updateChallengeData(type: 'sambung_ayat_random');
         GameAlert.showTrueAlert(point: pointAllocation.sambungAyatRandom);
       } else {
         await gameController.addPointToUserAccount(amount: pointAllocation.sambungAyat);
+        await gameController.updateChallengeData(type: 'sambung_ayat');
         GameAlert.showTrueAlert(point: pointAllocation.sambungAyat);
       }
       print("benar");

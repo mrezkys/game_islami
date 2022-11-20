@@ -37,7 +37,13 @@ class SambungAyatChoice extends GetView<SambungAyatGameController> {
                   value: indexInSurah,
                   groupValue: controller.selectedChoice.value,
                   fillColor: MaterialStateColor.resolveWith((states) => AppColor.secondary),
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    if (controller.isAnswered.value == false) {
+                      controller.selectedChoice.value = controller.currentQuestion.value?.listChoiceIndexinSurah?[index];
+                      controller.selectedChoice.refresh();
+                      controller.checkAnswer();
+                    }
+                  },
                 ),
                 Expanded(
                   child: Text(
